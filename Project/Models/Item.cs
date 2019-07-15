@@ -8,10 +8,13 @@ namespace CastleGrimtol.Project.Models
     public string Name { get; set; }
     public string Description { get; set; }
 
-    public Item(string name, string description)
+    private Room Room { get; set; }
+
+    public Item(string name, string description, Room room)
     {
       Name = name;
       Description = description;
+      Room = room;
     }
   }
 }
