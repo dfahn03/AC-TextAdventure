@@ -16,7 +16,7 @@ namespace CastleGrimtol.Project.Models
       {
         Inventory.Add(i);
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($"You have picked up {Item.name}. {Item.description}");
+        Console.WriteLine($"You have picked up {i.Name}. {i.Description}");
         Console.ResetColor();
       }
       else

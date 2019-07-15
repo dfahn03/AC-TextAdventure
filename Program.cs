@@ -23,11 +23,8 @@ namespace CastleGrimtol
       Console.ResetColor();
       Console.WriteLine("Press 'Enter' or any key to start your training!");
       Console.ReadKey();
-      GameService gameService = new GameService(room, player);
-
-      //TODO get line above working with no errors
+      GameService gameService = new GameService();
       gameService.StartGame();
-
     }
   }
 }

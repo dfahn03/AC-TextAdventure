@@ -8,9 +8,9 @@ namespace CastleGrimtol.Project.Models
   {
     public string Name { get; set; }
     public string Description { get; set; }
-    // public string AltDescription { get; set; }
+    public string AltDescription { get; set; }
     public List<Item> Items { get; set; }
-    public Dictionary<string, IRoom> Exits { get; set; }
+    public Dictionary<string, Room> Exits { get; set; }
 
     public void Print()
     {
@@ -35,13 +35,13 @@ namespace CastleGrimtol.Project.Models
     // }
 
 
-    public Room(string name, string description, string altdescription)
+    public Room(string name, string description, string altDescription)
     {
       Name = name;
       Description = description;
-      AltDescription = altdescription;
+      AltDescription = altDescription;
       Items = new List<Item>();
-      Exits = new Dictionary<string, IRoom>();
+      Exits = new Dictionary<string, Room>();
     }
   }
 }
