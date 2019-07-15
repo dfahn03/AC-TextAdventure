@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using CastleGrimtol.Project.Interfaces;
 using CastleGrimtol.Project.Models;
 
@@ -7,12 +8,10 @@ namespace CastleGrimtol.Project
 {
   public class GameService : IGameService
   {
-    private bool Running = true;
+    private bool playing = true;
     public Room CurrentRoom { get; set; }
     public Player CurrentPlayer
     { get; set; }
-
-    private bool running = true;
 
     public void Setup()
     {
@@ -25,14 +24,21 @@ namespace CastleGrimtol.Project
       Room boss = new Room("Boss", "", "");
       #endregion
       #region Items
-      Item torch = new Item("Torch", "A simple stick of wood with the top of it wrapped with cloth that was dipped in flammable oil. When lit, it creates a decent amount of light to better view your surroundings.", lair);
-      Item ablade1 = new Item("Hidden Blade", "A hidden blade is an Assassin's main tool. It is light-weight and fits over your hand covering your wrist and forearm. Provides protection from incoming strikes and support to your wrist as you maneuver around this world", lair);
-      Item ablad2 = new Item("Hidden Blade", "Adds another hidden blade to your other wrist to create a dual hidden blade feature. AKA Double Hidden Blades", spain);
-      Item aOutfit = new Item("Assassin Outfit", "These are the robes that all Assassin's wear to hide their identity and blend in.", cyprus);
-      Item AI = new Item("Ezio", "Ezio is a master Assassin and will help you along your journey to defeat the Templars", venice);
+      Item torch = new Item("Torch", "A simple stick of wood with the top of it wrapped with cloth that was dipped in flammable oil. When lit, it creates a decent amount of light to better view your surroundings.");
+      Item ablade1 = new Item("Hidden Blade", "A hidden blade is an Assassin's main tool. It is light-weight and fits over your hand covering your wrist and forearm. Provides protection from incoming strikes and support to your wrist as you maneuver around this world");
+      Item ablade2 = new Item("Hidden Blade", "Adds another hidden blade to your other wrist to create a dual hidden blade feature. AKA Double Hidden Blades");
+      Item aOutfit = new Item("Assassin Outfit", "These are the robes that all Assassin's wear to hide their identity and blend in.");
+      Item AI = new Item("Ezio", "Ezio is a master Assassin and will help you along your journey to defeat the Templars");
       // Item apple = new Item("Apple of Eden", "A rare artifact that dates back to the creation of mankind. It can only be weilded but special individuals that possess the correct fortitude. It can be used to control the minds of others and to physically harm others.");
       #endregion
-      #region Lair Exits
+      #region Items Added to Rooms
+      lair.Items.Add(torch);
+      lair.Items.Add(ablade1);
+      spain.Items.Add(ablade2);
+      cyprus.Items.Add(aOutfit);
+      venice.Items.Add(AI);
+      #endregion
+      #region Room Exits
       lair.Exits.Add("North", venice);
       lair.Exits.Add("East", rome);
       lair.Exits.Add("South", cyprus);
@@ -44,33 +50,40 @@ namespace CastleGrimtol.Project
       #endregion
 
       CurrentRoom = lair;
-      // CurrentPlayer = ;
     }
 
     public void StartGame()
     {
-      Console.ForegroundColor = ConsoleColor.Black;
-      Console.BackgroundColor = ConsoleColor.Blue;
+      Console.WriteLine();
+      Console.ForegroundColor = ConsoleColor.DarkCyan;
       Console.WriteLine("You are about to put put through the Assassin training program. You will need to use your wit and skill to navigate through this training simulation. Your main objective is to get through the training without dying and defeat every Assassin's arch nemesis, a Templar. Good luck! Make the brotherhood proud!");
       Console.ResetColor();
+      Thread.Sleep(3000);
+      Console.WriteLine();
       Console.WriteLine("To get started, please tell me your Assassin name?");
-      string CurrentPlayer = Console.ReadLine();
-      Console.BackgroundColor = ConsoleColor.Black;
-      Console.ForegroundColor = ConsoleColor.Cyan;
+      string cPlayer = Console.ReadLine();
+      CurrentPlayer = new Player(cPlayer);
+      Console.ForegroundColor = ConsoleColor.DarkCyan;
+      Thread.Sleep(3000);
+      Console.WriteLine();
       Console.WriteLine("Great! Your Assassin name is " + CurrentPlayer);
       // TODO use the name variale to create an instance of a player and then assign the property CurrentPlayer equal to that newly created player
       Console.ResetColor();
-      Console.ForegroundColor = ConsoleColor.Red;
+      Thread.Sleep(3000);
+      Console.WriteLine();
       Console.WriteLine("Now you know the objective of this training simulation and you have an Assassin name. Let's get started! Press 'Enter'!");
       Console.ResetColor();
+      Console.ForegroundColor = ConsoleColor.DarkRed;
+      Console.WriteLine("If you ever get stuck, type 'help'!");
+      Console.ResetColor();
       Console.ReadKey();
+      Console.WriteLine();
+      Console.WriteLine(CurrentRoom.Description);
 
-      while (running)
+      while (playing)
       {
-        CurrentRoom.Print();
-        CurrentRoom.PrintOptions();
-
-
+        IRoom currentRoom = CurrentRoom;
+        GetUserInput();
       }
 
     }
@@ -78,12 +91,6 @@ namespace CastleGrimtol.Project
     public void GetUserInput()
     {
       string input = Console.ReadLine().ToLower();
-      // Console.Write("Moving...");
-      // for (int i = 0; i < 10; i++)
-      // {
-      //   Thread.Sleep(500);
-      //   Console.Write('.');
-      // }
       Console.Clear();
       string[] inputs = input.Split(' ');
       string command = inputs[0];
@@ -95,27 +102,27 @@ namespace CastleGrimtol.Project
       switch (command)
       {
         case "go":
-          CurrentRoom = CurrentRoom.Go(option);
+          Go(option);
           break;
-        case "Look":
+        case "look":
           Look();
           break;
-        case "Inventory":
+        case "inventory":
           Inventory();
           break;
-        case "Take":
+        case "take":
           TakeItem(option);
           break;
-        case "Use":
+        case "use":
           UseItem(option);
           break;
-        case "Help":
+        case "help":
           Help();
           break;
-        case "Reset":
+        case "reset":
           Reset();
           break;
-        case "Quit":
+        case "quit":
           Quit();
           break;
       }
@@ -123,20 +130,10 @@ namespace CastleGrimtol.Project
 
     public void Go(string direction)
     {
-      switch (direction)
-      {
-        case "North":
-          if (direction != null)
-          {
-            return this;
-          }
-        case "next":
-          if (direction != null)
-          {
-            return this;
-          }
-
-      }
+      Console.Clear();
+      Room dest = (Room)CurrentRoom.Go(direction);
+      CurrentRoom = dest;
+      CurrentRoom.Print();
 
     }
 
@@ -145,7 +142,7 @@ namespace CastleGrimtol.Project
       //TODO use .find instead of contains so that you can use a callback function to search for the item with that name
       Item item = CurrentRoom.Items.Find(i => i.Name == itemName/**your query function here */);
       //if found item exists then add it to the player's inventory else not a valid item
-      if (item != null/**check if item isn't null */)
+      if (item != null && item != /**check if item isn't null */)
       {
         CurrentPlayer.AddItemToInventory(item);
       }
@@ -161,12 +158,22 @@ namespace CastleGrimtol.Project
     }
     public void Help()
     {
-
+      Console.WriteLine(@"There is always shame in asking for help when you are an Assassin... 
+       go: Where do you want to go?
+       take: If you want it, take it! 
+       use: If you got it, do you want to use it?... 
+       look: What are you lookin at?
+       inventory: What are you carrying?
+       quit: I'm a failure and I'm quiting to join the Templars.....or be a peasant!...most likely a peasant though!
+       cheat: *Let Ezio join you and use him in while in Rome.
+       reset: Will starting over give you an edge?");
+      GetUserInput();
     }
 
     public void Look()
     {
-
+      Console.Clear();
+      CurrentRoom.Print();
     }
     public void Inventory()
     {
@@ -175,18 +182,45 @@ namespace CastleGrimtol.Project
 
     public void Reset()
     {
-      Console.WriteLine("If you want to reset your training simulator, type 'Reset' at any time");
-      Console.ReadLine();
+      Console.Clear();
       StartGame();
     }
     public void Quit()
     {
-      Console.WriteLine("If you wish to quit the training then type 'Quit' at any time.");
-      Console.ReadLine();
-      // if ("Quit")
+      playing = false;
+      // Console.WriteLine("The Matrix has won! Good-bye.");
+      Console.WriteLine();
+      Console.WriteLine("Play again? b/p");
+      ConsoleKeyInfo res = Console.ReadKey();
+      if (res.KeyChar == 'b')
+      {
+        Setup();
+        playing = true;
+        StartGame();
+      }
+      else if (res.KeyChar == 'p')
+      {
+        Console.WriteLine();
+        Console.WriteLine("Shame upon you and your family! You wont see us again...");
+        // Console.ReadLine();
+        Environment.Exit(0);
+      }
+      else
+      {
+        Console.WriteLine();
+        Quit();
+      }
+
     }
 
+    public void WinGame()
+    {
 
+    }
+    public void LoseGame()
+    {
+
+    }
     public GameService()
     {
       Setup();

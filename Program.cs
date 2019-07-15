@@ -17,12 +17,14 @@ namespace CastleGrimtol
                                                                                                               `---'  
           ";
       Console.ForegroundColor = ConsoleColor.DarkCyan;
-      Console.BackgroundColor = ConsoleColor.DarkGray;
       Console.WriteLine(title);
       Console.WriteLine("Welcome to the Assassin Training Program!");
       Console.ResetColor();
+      Console.WriteLine();
+      Console.ForegroundColor = ConsoleColor.DarkCyan;
       Console.WriteLine("Press 'Enter' or any key to start your training!");
       Console.ReadKey();
+      Console.ResetColor();
       GameService gameService = new GameService();
       gameService.StartGame();
     }
