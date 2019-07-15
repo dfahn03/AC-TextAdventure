@@ -41,11 +41,17 @@ namespace CastleGrimtol.Project
 
     public void Quit()
     {
+      Console.WriteLine("If you wish to quit the training then type 'Quit' at any time.");
+      Console.ReadLine();
+      if ("Quit")
 
     }
 
     public void Reset()
     {
+      Console.WriteLine("If you want to reset your training simulator, type 'Reset' at any time");
+      Console.ReadLine();
+
 
     }
 
@@ -68,7 +74,7 @@ namespace CastleGrimtol.Project
       // Item apple = new Item("Apple of Eden", "A rare artifact that dates back to the creation of mankind. It can only be weilded but special individuals that possess the correct fortitude. It can be used to control the minds of others and to physically harm others.");
       #endregion
       #region Exits
-      Dictionary<string, IRoom>.Add("North", );
+      Dictionary<string, IRoom>.Add("North", venice);
       #endregion
 
       CurrentRoom = lair;
@@ -109,15 +115,7 @@ namespace CastleGrimtol.Project
 
     public void TakeItem(string itemName)
     {
-      if (Item.itemName == Player.Inventory.itemName)
-      {
-        Console.WriteLine("You already picked this item up. Please continue on with the game.");
-      }
-      else
-      {
-        Console.WriteLine($"You have picked up {Item.name}")
-      }
-
+      Player.AddItemToInventory();
     }
 
     public void UseItem(string itemName)
