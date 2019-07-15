@@ -8,22 +8,23 @@ namespace CastleGrimtol
     public static void Main(string[] args)
     {
       Console.Clear();
-      //     string title = @"
-      //   ,---.                                    ,--.         ,--------.              ,--.        ,--.               
-      //  /  O  \  ,---.  ,---. ,--,--. ,---.  ,---.`--',--,--,  '--.  .--',--.--.,--,--.`--',--,--, `--',--,--,  ,---. 
-      // |  .-.  |(  .-' (  .-'' ,-.  |(  .-' (  .-',--.|      \    |  |   |  .--' ,-.  |,--.|      \,--.|      \| .-. |
-      // |  | |  |.-'  `).-'  `) '-'  |.-'  `).-'  `)  ||  ||  |    |  |   |  |  \ '-'  ||  ||  ||  ||  ||  ||  |' '-' '
-      // `--' `--'`----' `----' `--`--'`----' `----'`--'`--''--'    `--'   `--'   `--`--'`--'`--''--'`--'`--''--'.`-  / 
-      //                                                                                                         `---'  
-      //     ";
+      string title = @"
+        ,---.                                    ,--.         ,--------.              ,--.        ,--.               
+       /  O  \  ,---.  ,---. ,--,--. ,---.  ,---.`--',--,--,  '--.  .--',--.--.,--,--.`--',--,--, `--',--,--,  ,---. 
+      |  .-.  |(  .-' (  .-'' ,-.  |(  .-' (  .-',--.|      \    |  |   |  .--' ,-.  |,--.|      \,--.|      \| .-. |
+      |  | |  |.-'  `).-'  `) '-'  |.-'  `).-'  `)  ||  ||  |    |  |   |  |  \ '-'  ||  ||  ||  ||  ||  ||  |' '-' '
+      `--' `--'`----' `----' `--`--'`----' `----'`--'`--''--'    `--'   `--'   `--`--'`--'`--''--'`--'`--''--'.`-  / 
+                                                                                                              `---'  
+          ";
+      Console.ForegroundColor = ConsoleColor.DarkCyan;
+      Console.BackgroundColor = ConsoleColor.DarkGray;
+      Console.WriteLine(title);
       Console.WriteLine("Welcome to the Assassin Training Program!");
-      Console.WriteLine("You are about to put put through the Assassin training program. You will need to use your wit and skill to navigate through this training simulation. Your main objective is to get through the training without dying and defeat every Assassin's arch nemesis, a Templar. Good luck! Make the brotherhood proud!");
-      Console.WriteLine("To get started, please tell me your Assassin name?");
-      string name = Console.ReadLine();
-      Console.WriteLine("Great, your Assassin name is " + name);
-      Console.WriteLine("Now that you know the objective of this training simulation and your Assassin name. Press 'Enter' or any key to start your training!");
+      Console.ResetColor();
+      Console.WriteLine("Press 'Enter' or any key to start your training!");
       Console.ReadKey();
       GameService gameService = new GameService(room, player);
+
       //TODO get line above working with no errors
       gameService.StartGame();
 

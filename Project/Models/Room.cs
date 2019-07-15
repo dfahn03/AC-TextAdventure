@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CastleGrimtol.Project.Interfaces;
 
@@ -11,23 +12,27 @@ namespace CastleGrimtol.Project.Models
     public List<Item> Items { get; set; }
     public Dictionary<string, IRoom> Exits { get; set; }
 
-    public override void PrintOptions()
+    public void Print()
     {
-      System.Console.Write("type 'go North', 'go East', 'go South', 'go West', or one of the other commands. ");
+      Console.WriteLine($"Welcome to {Name}! {Description}");
     }
-    public override Go(string dir)
+    public void PrintOptions()
     {
-      switch (dir)
-      {
-        case "previous":
-          if (Previous != null) return Previous;
-          return this;
-        case "next":
-          if (Next != null) return Next;
-          return this;
+      System.Console.Write("type 'Go North', 'Go East', 'Go South', 'Go West', or 'Help' to view one of the other commands. ");
+    }
+    // public override Go(string dir)
+    // {
+    //   switch (dir)
+    //   {
+    //     case "previous":
+    //       if (Previous != null) return Previous;
+    //       return this;
+    //     case "next":
+    //       if (Next != null) return Next;
+    //       return this;
 
-      }
-    }
+    //   }
+    // }
 
 
     public Room(string name, string description, string altdescription)

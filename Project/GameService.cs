@@ -43,7 +43,8 @@ namespace CastleGrimtol.Project
     {
       Console.WriteLine("If you wish to quit the training then type 'Quit' at any time.");
       Console.ReadLine();
-      if ("Quit")
+      // if ("Quit")
+
 
     }
 
@@ -51,8 +52,7 @@ namespace CastleGrimtol.Project
     {
       Console.WriteLine("If you want to reset your training simulator, type 'Reset' at any time");
       Console.ReadLine();
-
-
+      StartGame();
     }
 
     public void Setup()
@@ -74,7 +74,7 @@ namespace CastleGrimtol.Project
       // Item apple = new Item("Apple of Eden", "A rare artifact that dates back to the creation of mankind. It can only be weilded but special individuals that possess the correct fortitude. It can be used to control the minds of others and to physically harm others.");
       #endregion
       #region Exits
-      Dictionary<string, IRoom>.Add("North", venice);
+      // Dictionary<string, IRoom>.Add("North", venice);
       #endregion
 
       CurrentRoom = lair;
@@ -83,9 +83,24 @@ namespace CastleGrimtol.Project
 
     public void StartGame()
     {
+      Console.ForegroundColor = ConsoleColor.Black;
+      Console.BackgroundColor = ConsoleColor.Blue;
+      Console.WriteLine("You are about to put put through the Assassin training program. You will need to use your wit and skill to navigate through this training simulation. Your main objective is to get through the training without dying and defeat every Assassin's arch nemesis, a Templar. Good luck! Make the brotherhood proud!");
+      Console.ResetColor();
+      Console.WriteLine("To get started, please tell me your Assassin name?");
+      string name = Console.ReadLine();
+      Console.BackgroundColor = ConsoleColor.Black;
+      Console.ForegroundColor = ConsoleColor.Cyan;
+      Console.WriteLine("Great! Your Assassin name is " + name);
+      Console.ResetColor();
+      Console.ForegroundColor = ConsoleColor.Red;
+      Console.WriteLine("Now you know the objective of this training simulation and you have an Assassin name. Let's get started! Press 'Enter'!");
+      Console.ResetColor();
+      Console.ReadKey();
+
       while (running)
       {
-        CurrentRoom.Description.Print();
+        CurrentRoom.Print();
         CurrentRoom.PrintOptions();
         string input = Console.ReadLine();
         // Console.Write("Moving...");
@@ -105,9 +120,31 @@ namespace CastleGrimtol.Project
         }
         switch (command)
         {
-          case "go":
+          case "Go":
             CurrentRoom = CurrentRoom.(option);
             break;
+          case "Look":
+            Look();
+            break;
+          case "Inventory":
+            Inventory();
+            break;
+          case "Take":
+            TakeItem();
+            break;
+          case "Use":
+            UseItem();
+            break;
+          case "Help":
+            Help();
+            break;
+          case "Reset":
+            Reset();
+            break;
+          case "Quit":
+            Quit();
+            break;
+
         }
       }
 
@@ -115,7 +152,14 @@ namespace CastleGrimtol.Project
 
     public void TakeItem(string itemName)
     {
-      Player.AddItemToInventory();
+      if (CurrentRoom.Contains(Item))
+      {
+        CurrentPlayer.AddItemToInventory();
+      }
+      else
+      {
+        Console.WriteLine($"{CurrentRoom} does not contain any items to pick up or you have already picked this rooms item up.");
+      }
     }
 
     public void UseItem(string itemName)

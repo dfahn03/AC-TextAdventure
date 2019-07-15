@@ -9,13 +9,14 @@ namespace CastleGrimtol.Project.Models
     public string PlayerName { get; set; }
     public List<Item> Inventory { get; set; }
 
-    public void AddItemToInventory()
+    public void AddItemToInventory(Item i)
     {
-      if (!Inventory.Contains(Item.Name))
+      List<Item> inventory = Inventory;
+      if (!inventory.Contains(i))
       {
         Inventory.Add(i);
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($"You have picked up {Item.name}");
+        Console.WriteLine($"You have picked up {Item.name}. {Item.description}");
         Console.ResetColor();
       }
       else
