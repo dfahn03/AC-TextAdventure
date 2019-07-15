@@ -22,16 +22,7 @@ namespace CastleGrimtol.Project.Models
     }
     // public override Go(string dir)
     // {
-    //   switch (dir)
-    //   {
-    //     case "previous":
-    //       if (Previous != null) return Previous;
-    //       return this;
-    //     case "next":
-    //       if (Next != null) return Next;
-    //       return this;
 
-    //   }
     // }
 
 

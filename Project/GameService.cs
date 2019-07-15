@@ -14,47 +14,6 @@ namespace CastleGrimtol.Project
 
     private bool running = true;
 
-    public void GetUserInput()
-    {
-
-    }
-
-    public void Go(string direction)
-    {
-
-    }
-
-    public void Help()
-    {
-
-    }
-
-    public void Inventory()
-    {
-
-    }
-
-    public void Look()
-    {
-
-    }
-
-    public void Quit()
-    {
-      Console.WriteLine("If you wish to quit the training then type 'Quit' at any time.");
-      Console.ReadLine();
-      // if ("Quit")
-
-
-    }
-
-    public void Reset()
-    {
-      Console.WriteLine("If you want to reset your training simulator, type 'Reset' at any time");
-      Console.ReadLine();
-      StartGame();
-    }
-
     public void Setup()
     {
       #region Rooms
@@ -110,50 +69,73 @@ namespace CastleGrimtol.Project
       {
         CurrentRoom.Print();
         CurrentRoom.PrintOptions();
-        string input = Console.ReadLine();
-        // Console.Write("Moving...");
-        // for (int i = 0; i < 10; i++)
-        // {
-        //   Thread.Sleep(500);
-        //   Console.Write('.');
-        // }
 
-        Console.Clear();
-        string[] inputs = input.Split(' ');
-        string command = inputs[0];
-        string option = "";
-        if (inputs.Length > 1)
-        {
-          option = inputs[1];
-        }
-        switch (command)
-        {
-          case "Go":
-          case "go":
-            CurrentRoom = CurrentRoom.(option);
-            break;
-          case "Look":
-            Look();
-            break;
-          case "Inventory":
-            Inventory();
-            break;
-          case "Take":
-            TakeItem();
-            break;
-          case "Use":
-            UseItem();
-            break;
-          case "Help":
-            Help();
-            break;
-          case "Reset":
-            Reset();
-            break;
-          case "Quit":
-            Quit();
-            break;
-        }
+
+      }
+
+    }
+
+    public void GetUserInput()
+    {
+      string input = Console.ReadLine().ToLower();
+      // Console.Write("Moving...");
+      // for (int i = 0; i < 10; i++)
+      // {
+      //   Thread.Sleep(500);
+      //   Console.Write('.');
+      // }
+      Console.Clear();
+      string[] inputs = input.Split(' ');
+      string command = inputs[0];
+      string option = "";
+      if (inputs.Length > 1)
+      {
+        option = inputs[1];
+      }
+      switch (command)
+      {
+        case "go":
+          CurrentRoom = CurrentRoom.Go(option);
+          break;
+        case "Look":
+          Look();
+          break;
+        case "Inventory":
+          Inventory();
+          break;
+        case "Take":
+          TakeItem(option);
+          break;
+        case "Use":
+          UseItem(option);
+          break;
+        case "Help":
+          Help();
+          break;
+        case "Reset":
+          Reset();
+          break;
+        case "Quit":
+          Quit();
+          break;
+      }
+    }
+
+    public void Go(string direction)
+    {
+      switch (direction)
+      {
+        case "North":
+          if (direction != null)
+          {
+            return this;
+          }
+        case "next":
+          if (direction != null)
+          {
+            return this;
+          }
+
       }
 
     }
@@ -177,6 +159,33 @@ namespace CastleGrimtol.Project
     {
 
     }
+    public void Help()
+    {
+
+    }
+
+    public void Look()
+    {
+
+    }
+    public void Inventory()
+    {
+
+    }
+
+    public void Reset()
+    {
+      Console.WriteLine("If you want to reset your training simulator, type 'Reset' at any time");
+      Console.ReadLine();
+      StartGame();
+    }
+    public void Quit()
+    {
+      Console.WriteLine("If you wish to quit the training then type 'Quit' at any time.");
+      Console.ReadLine();
+      // if ("Quit")
+    }
+
 
     public GameService()
     {
