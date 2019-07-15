@@ -82,8 +82,6 @@ namespace CastleGrimtol.Project
       spain.Exits.Add("East", lair);
       venice.Exits.Add("South", lair);
       rome.Exits.Add("West", lair);
-
-
       #endregion
 
       CurrentRoom = lair;
@@ -97,10 +95,10 @@ namespace CastleGrimtol.Project
       Console.WriteLine("You are about to put put through the Assassin training program. You will need to use your wit and skill to navigate through this training simulation. Your main objective is to get through the training without dying and defeat every Assassin's arch nemesis, a Templar. Good luck! Make the brotherhood proud!");
       Console.ResetColor();
       Console.WriteLine("To get started, please tell me your Assassin name?");
-      string name = Console.ReadLine();
+      string CurrentPlayer = Console.ReadLine();
       Console.BackgroundColor = ConsoleColor.Black;
       Console.ForegroundColor = ConsoleColor.Cyan;
-      Console.WriteLine("Great! Your Assassin name is " + name);
+      Console.WriteLine("Great! Your Assassin name is " + CurrentPlayer);
       // TODO use the name variale to create an instance of a player and then assign the property CurrentPlayer equal to that newly created player
       Console.ResetColor();
       Console.ForegroundColor = ConsoleColor.Red;
@@ -155,7 +153,6 @@ namespace CastleGrimtol.Project
           case "Quit":
             Quit();
             break;
-
         }
       }
 
@@ -164,15 +161,15 @@ namespace CastleGrimtol.Project
     public void TakeItem(string itemName)
     {
       //TODO use .find instead of contains so that you can use a callback function to search for the item with that name
-      Item item = CurrentRoom.Items.Find(/**your query function here */)
+      Item item = CurrentRoom.Items.Find(i => i.Name == itemName/**your query function here */);
       //if found item exists then add it to the player's inventory else not a valid item
-      if (/**check if item isn't null */)
+      if (item != null/**check if item isn't null */)
       {
         CurrentPlayer.AddItemToInventory(item);
       }
       else
       {
-        Console.WriteLine($"{CurrentRoom.Name} does not contain any items to pick up or you have already picked this rooms item up.");
+        Console.WriteLine($"{CurrentRoom.Name} does not contain any items to pick up or you have already picked the item up.");
       }
     }
 
