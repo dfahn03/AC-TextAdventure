@@ -37,7 +37,31 @@ namespace CastleGrimtol.Project.Models
         Console.WriteLine("What do you do?");
       }
     }
-    //TODO Add Second Description so items show up as 1
+    public void PrintAltDescription()
+    {
+      Console.WriteLine($"Welcome to {Name}!");
+      Console.WriteLine();
+      Console.WriteLine($"{AltDescription}");
+      Thread.Sleep(1000);
+      Console.WriteLine();
+      Console.WriteLine("Do you want Ezio to join you? If 'Yes' type 'take ezio'. If 'No' just leave the room.");
+      Console.WriteLine();
+      if (Items.Count == 0)
+      {
+        Console.WriteLine($"There are no Items in {Name}:");
+        Console.WriteLine();
+        Console.WriteLine("What do you do?");
+      }
+      else if (Items.Count != 0)
+      {
+        Console.WriteLine($"Items in {Name}:");
+        foreach (var item in Items)
+        {
+          Console.WriteLine(item.Name);
+        }
+        Console.WriteLine("What do you do?");
+      }
+    }
     public void PrintThirdDescription()
     {
       Console.WriteLine($"Welcome to {Name}!");
@@ -45,7 +69,7 @@ namespace CastleGrimtol.Project.Models
       Console.WriteLine($"{FinalDescription}");
       Thread.Sleep(1000);
       Console.WriteLine();
-      if (Items.Count == 0 || Name == "Venice")
+      if (Items.Count == 0)
       {
         Console.WriteLine($"There are no Items in {Name}:");
         Console.WriteLine();
@@ -62,15 +86,15 @@ namespace CastleGrimtol.Project.Models
       }
     }
 
-    public void PrintUsedTorch()
-    {
-      Console.WriteLine($"Welcome to the new {Name}!");
-      Console.WriteLine();
-      Console.WriteLine(AltDescription);
-      Console.WriteLine();
-      Console.WriteLine("Do you want Ezio to join you? If 'Yes' type 'take ezio'. If 'No' just leave the room.");
-      // Console.ReadLine();
-    }
+    // public void PrintUsedTorch()
+    // {
+    //   Console.WriteLine($"Welcome to the new {Name}!");
+    //   Console.WriteLine();
+    //   Console.WriteLine(AltDescription);
+    //   Console.WriteLine();
+    //   Console.WriteLine("Do you want Ezio to join you? If 'Yes' type 'take ezio'. If 'No' just leave the room.");
+    //   // Console.ReadLine();
+    // }
 
     public IRoom Go(string direction)
     {

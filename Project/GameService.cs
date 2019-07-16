@@ -8,7 +8,7 @@ namespace CastleGrimtol.Project
 {
   public class GameService : IGameService
   {
-    private bool playing = true;
+    private bool running = true;
     public Room CurrentRoom { get; set; }
     public Player CurrentPlayer
     { get; set; }
@@ -17,7 +17,7 @@ namespace CastleGrimtol.Project
     {
       #region Rooms
       Room lair = new Room("Assassin Lair", "Assassin's always have a main lair that they can meet and regroup at any time that the situation arises. It is also used to store your maps, weapons, collectables and anyone you are trying to keep safe from the Templars. This Lair is special in the sense that it includes a Assassin training simulator. This is your starting point. Every Assassin needs his/her essentail tools to get started. You are automatically given a Torch. The Torch will help illuminate your path along your quest to save humanity", "", "");
-      Room cyprus = new Room("Cyprus", "Cyprus is where Altair served the Assassin Brotherhood. He went from being one of the highest ranking Assassin's in the Brotherhood to being shunned and demoted. You walk into a lit room and you see a video playing of all the coolest kill streaks Altair every had! There is also a large locked door in front of you.", "", "");
+      Room cyprus = new Room("Cyprus", "Cyprus is where Altair served the Assassin Brotherhood. He went from being one of the highest ranking Assassin's in the Brotherhood to being shunned and demoted. You walk into a lit room and you see a video running of all the coolest kill streaks Altair every had! There is also a large locked door in front of you.", "", "");
       Room spain = new Room("Spain", "Spain is where Ezio first learned that his father was an Assassin. His father and two brothers were hung by the Templars here. It was a very dark time in Ezio's life and started his path in the Brotherhood. At first, all he wanted was revenge but he quickly learned what it means to be an Assassin. As you walk in the room it is completely dark and you can't see anything. You stumble around to feel what you think is a door and a key hole.", "", "");
       Room venice = new Room("Venice", "Venice is a big part of Ezio's journey. He learned to master the necessary skills to be an Assassin. As you walk into this room, this room is completely dark.", "Well done! You lit up the room and notice a figure standing in the room. You approach the figure and talk to him. You learn that his name is Ezio and he asks to join you in your training.", "The room is lit and you have added Ezio to your team!");
       Room rome = new Room("Rome", "As you walk into Rome, you can see that the room is completely lit by several torches. There is a large locked door with weird symbols and drawings on it. To the right of the door you see a little hole that is the mechanism in which you use to unlock the door. The mechanism takes a special key to unlock.", "You have unlocked the door and walk through it.", "");
@@ -95,7 +95,7 @@ namespace CastleGrimtol.Project
       Console.Clear();
       CurrentRoom.Print();
 
-      while (playing)
+      while (running)
       {
         GetUserInput();
       }
@@ -156,13 +156,17 @@ namespace CastleGrimtol.Project
       Item item = CurrentRoom.Items.Find(i => i.Name == option);
       if (item != null)
       {
+        if (CurrentRoom.Name == "Venice" && CurrentRoom.Items.Contains(item.Name == torch))
+        {
+
+        }
         CurrentRoom.Items.Remove(item);
         CurrentPlayer.Inventory.Add(item);
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine();
         Console.WriteLine($"You have picked up {item.Name}: {item.Description} Adding it to your inventory now.");
-        Thread.Sleep(1000);
+        Thread.Sleep(2000);
         Console.ResetColor();
         Console.WriteLine();
         CurrentRoom.PrintThirdDescription();
@@ -186,7 +190,7 @@ namespace CastleGrimtol.Project
               Console.Clear();
               CurrentPlayer.Inventory.Remove(usableItem);
               CurrentRoom.Items.Add(usableItem);
-              CurrentRoom.PrintUsedTorch();
+              CurrentRoom.PrintAltDescription();
             }
             else
             {
@@ -246,7 +250,7 @@ namespace CastleGrimtol.Project
     }
     public void Quit()
     {
-      playing = false;
+      running = false;
       // Console.WriteLine("The Matrix has won! Good-bye.");
       Console.WriteLine();
       Console.WriteLine("Play again? b/p");
@@ -254,13 +258,13 @@ namespace CastleGrimtol.Project
       if (res.KeyChar == 'b')
       {
         Setup();
-        playing = true;
+        running = true;
         StartGame();
       }
       else if (res.KeyChar == 'p')
       {
         Console.WriteLine();
-        Console.WriteLine("Shame upon you and your family! You wont see us again...");
+        Console.WriteLine("Shame upon you and your family! You wont see us again...or will you when we hunt you down!");
         // Console.ReadLine();
         Environment.Exit(0);
       }
