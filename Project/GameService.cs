@@ -156,10 +156,10 @@ namespace CastleGrimtol.Project
       Item item = CurrentRoom.Items.Find(i => i.Name == option);
       if (item != null)
       {
-        if (CurrentRoom.Name == "Venice" && CurrentRoom.Items.Contains(item.Name == torch))
-        {
+        // if (CurrentRoom.Name == "Venice" && CurrentRoom.Items.Contains(item.Name == torch))
+        // {
 
-        }
+        // }
         CurrentRoom.Items.Remove(item);
         CurrentPlayer.Inventory.Add(item);
         Console.Clear();

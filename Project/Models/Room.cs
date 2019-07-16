@@ -108,11 +108,6 @@ namespace CastleGrimtol.Project.Models
         return this;
       }
     }
-    // public void AddItem(Item item)
-    // {
-
-    // }
-
 
     public Room(string name, string description, string altDescription, string finalDescription)
     {
