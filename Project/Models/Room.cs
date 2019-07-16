@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using CastleGrimtol.Project.Interfaces;
 
 namespace CastleGrimtol.Project.Models
@@ -9,18 +10,68 @@ namespace CastleGrimtol.Project.Models
     public string Name { get; set; }
     public string Description { get; set; }
     public string AltDescription { get; set; }
+    public string FinalDescription { get; set; }
     public List<Item> Items { get; set; }
     public Dictionary<string, IRoom> Exits { get; set; }
 
     public void Print()
     {
       Console.WriteLine($"Welcome to {Name}!");
+      Console.WriteLine();
       Console.WriteLine($"{Description}");
+      Thread.Sleep(1000);
+      Console.WriteLine();
+      if (Items.Count == 0 || Name == "Venice")
+      {
+        Console.WriteLine($"There are no Items in {Name}:");
+        Console.WriteLine();
+        Console.WriteLine("What do you do?");
+      }
+      else if (Items.Count != 0)
+      {
+        Console.WriteLine($"Items in {Name}:");
+        foreach (var item in Items)
+        {
+          Console.WriteLine(item.Name);
+        }
+        Console.WriteLine("What do you do?");
+      }
     }
-    public void PrintOptions()
+    //TODO Add Second Description so items show up as 1
+    public void PrintThirdDescription()
     {
-      System.Console.Write("Type 'help' to get the list of all commands you can type in.");
+      Console.WriteLine($"Welcome to {Name}!");
+      Console.WriteLine();
+      Console.WriteLine($"{FinalDescription}");
+      Thread.Sleep(1000);
+      Console.WriteLine();
+      if (Items.Count == 0 || Name == "Venice")
+      {
+        Console.WriteLine($"There are no Items in {Name}:");
+        Console.WriteLine();
+        Console.WriteLine("What do you do?");
+      }
+      else if (Items.Count != 0)
+      {
+        Console.WriteLine($"Items in {Name}:");
+        foreach (var item in Items)
+        {
+          Console.WriteLine(item.Name);
+        }
+        Console.WriteLine("What do you do?");
+      }
     }
+
+    public void PrintUsedTorch()
+    {
+      Console.WriteLine($"Welcome to the new {Name}!");
+      Console.WriteLine();
+      Console.WriteLine(AltDescription);
+      Console.WriteLine();
+      Console.WriteLine("Do you want Ezio to join you? If 'Yes' type 'take ezio'. If 'No' just leave the room.");
+      // Console.ReadLine();
+    }
+
     public IRoom Go(string direction)
     {
       if (Exits.ContainsKey(direction))
@@ -33,17 +84,18 @@ namespace CastleGrimtol.Project.Models
         return this;
       }
     }
-    public void AddItem(Item item)
-    {
+    // public void AddItem(Item item)
+    // {
 
-    }
+    // }
 
 
-    public Room(string name, string description, string altDescription)
+    public Room(string name, string description, string altDescription, string finalDescription)
     {
       Name = name;
       Description = description;
       AltDescription = altDescription;
+      FinalDescription = finalDescription;
       Items = new List<Item>();
       Exits = new Dictionary<string, IRoom>();
     }
